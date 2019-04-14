@@ -1,6 +1,6 @@
-username=username
-password=password
+username=c20xh2
+password=c20xh2
 wpm=95
 minimum_games=0
 maximum_games=15
-headless=True
+headless=False
