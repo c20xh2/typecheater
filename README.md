@@ -1,13 +1,13 @@
 # typecheater
 
 
-You need:
+Make sure you have selenium:
 
 ```pip3 install selenium```
 And latest chromedriver
    
 
-Edit config file and run !
+Edit config file and run ```python3 type_cheat.py``` 
 
 Ex:
 ```
