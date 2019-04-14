@@ -236,15 +236,17 @@ class Racer():
 
 	def get_results(self):
 		time.sleep(3)
-		try:
-			self.last_game_speed = self.driver.find_element_by_xpath('//*[@id="gwt-uid-16"]/table/tbody/tr[4]/td/div/table/tbody/tr[2]/td/table/tbody/tr/td[2]/table/tbody/tr[4]/td/table/tbody/tr[1]/td[2]/table/tbody/tr/td[1]/div/div').text
-			self.last_game_time = self.driver.find_element_by_xpath('//*[@id="gwt-uid-16"]/table/tbody/tr[4]/td/div/table/tbody/tr[2]/td/table/tbody/tr/td[2]/table/tbody/tr[4]/td/table/tbody/tr[2]/td[2]/div/span').text
-			self.last_game_accuracy = self.driver.find_element_by_xpath('//*[@id="gwt-uid-16"]/table/tbody/tr[4]/td/div/table/tbody/tr[2]/td/table/tbody/tr/td[2]/table/tbody/tr[4]/td/table/tbody/tr[3]/td[2]/div').text
-			self.last_game_points = self.driver.find_element_by_xpath('//*[@id="gwt-uid-16"]/table/tbody/tr[4]/td/div/table/tbody/tr[2]/td/table/tbody/tr/td[2]/table/tbody/tr[4]/td/table/tbody/tr[4]/td[2]/div/div').text
-			self.last_game_points = self.driver.find_element_by_xpath('//*[@id="gwt-uid-16"]/table/tbody/tr[4]/td/div/table/tbody/tr[2]/td/table/tbody/tr/td[2]/table/tbody/tr[4]/td/table/tbody/tr[4]/td[2]/div/div').text
-			self.last_game_placement = self.driver.find_element_by_xpath('//*[@id="gwt-uid-16"]/table/tbody/tr[1]/td/table/tbody/tr[2]/td/table/tbody/tr[1]/td/table/tbody/tr/td[2]/div/div[1]').text
-		except:
-			pass		
+		try:		
+			self.last_game_speed = self.driver.find_element_by_xpath('//*/table/tbody/tr[4]/td/div/table/tbody/tr[2]/td/table/tbody/tr/td[2]/table/tbody/tr[4]/td/table/tbody/tr[1]/td[2]/table/tbody/tr/td[1]/div/div').text
+			self.last_game_time = self.driver.find_element_by_xpath('//*/table/tbody/tr[4]/td/div/table/tbody/tr[2]/td/table/tbody/tr/td[2]/table/tbody/tr[4]/td/table/tbody/tr[2]/td[2]/div/span').text
+			self.last_game_accuracy = self.driver.find_element_by_xpath('//*/table/tbody/tr[4]/td/div/table/tbody/tr[2]/td/table/tbody/tr/td[2]/table/tbody/tr[4]/td/table/tbody/tr[3]/td[2]/div').text
+			self.last_game_points = self.driver.find_element_by_xpath('//*/table/tbody/tr[4]/td/div/table/tbody/tr[2]/td/table/tbody/tr/td[2]/table/tbody/tr[4]/td/table/tbody/tr[4]/td[2]/div/div').text
+			self.last_game_points = self.driver.find_element_by_xpath('//*/table/tbody/tr[4]/td/div/table/tbody/tr[2]/td/table/tbody/tr/td[2]/table/tbody/tr[4]/td/table/tbody/tr[4]/td[2]/div/div').text
+			self.last_game_placement = self.driver.find_element_by_xpath('//*/table/tbody/tr[1]/td/table/tbody/tr[2]/td/table/tbody/tr[1]/td/table/tbody/tr/td[2]/div/div[1]').text
+
+		except Exception as e:
+			print(e)
+			time.sleep(60)
 	def play_again(self):
 
 		new_game = False

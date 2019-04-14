@@ -1,6 +1,6 @@
 username=username
 password=password
-wpm=120
+wpm=90
 minimum_games=10
 maximum_games=15
 headless=True
