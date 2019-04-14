@@ -9,6 +9,7 @@ from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.common.action_chains import ActionChains
 
 
 class Racer():
@@ -27,7 +28,7 @@ class Racer():
 
 		self.minimum_games = 0
 		self.maximum_games = 0
-
+		self.accuracy = 0
 		self.games_count = 0
 		self.number_of_games = 0
 
@@ -62,6 +63,8 @@ class Racer():
 					self.maximum_games = int(line.split('=', 1)[1].strip())
 				if 'headless=' in line:
 					self.headless_browser = line.split('=', 1)[1].strip()
+				if 'accuracy=' in line:
+					self.accuracy = int(line.split('=', 1)[1].strip())
 
 	def get_keystroke_delay(self):
 
@@ -151,7 +154,7 @@ class Racer():
 
 	def check_typo(self):
 
-		roll = random.randint(0, 15)
+		roll = random.randint(0, self.accuracy)
 		
 		if roll <= 1:
 			return True
@@ -186,10 +189,12 @@ class Racer():
 	def race(self):
 
 		try:
-		
+			
+			hover = ActionChains(self.driver).move_to_element(self.race_input_box)
+			hover.perform()
 			typo = False
 			i = 0
-	
+			
 			while self.active_game:
 
 				if i >= self.race_words_count:

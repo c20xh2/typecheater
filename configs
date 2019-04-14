@@ -1,6 +1,7 @@
-username=c20xh2
-password=c20xh2
-wpm=95
-minimum_games=0
+username=username
+password=password
+wpm=120
+minimum_games=10
 maximum_games=15
-headless=False
+headless=True
+accuracy=18
