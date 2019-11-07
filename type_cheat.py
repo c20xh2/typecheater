@@ -101,7 +101,7 @@ class Racer():
 		print('[|] Login in {}'.format(self.player_username))
 
 		self.driver.get('https://play.typeracer.com/')
-
+		# self.driver.get('https://play.typeracer.com?rt=1v6kzwbwg8')
 		time.sleep(5)
 
 		sign_in = self.driver.find_elements_by_tag_name('a')
@@ -172,7 +172,9 @@ class Racer():
 		while not self.ready:
 			self.wait_for_countdown()
 
-		self.race_time = self.driver.find_element_by_xpath('/html/body/div[1]/div/div[1]/div[1]/table/tbody/tr[2]/td[2]/div/div[1]/div/table/tbody/tr[2]/td[3]/table/tbody/tr[1]/td/table/tbody/tr[1]/td/table/tbody/tr/td[2]/div/div/span').text
+		# self.race_time = self.driver.find_element_by_xpath('/html/body/div[1]/div/div[1]/div[1]/table/tbody/tr[2]/td[2]/div/div[1]/div/table/tbody/tr[2]/td[3]/table/tbody/tr[1]/td/table/tbody/tr[1]/td/table/tbody/tr/td[2]/div/div/span').text
+		self.race_time = '10:00'
+
 		self.race_text = self.driver.find_element_by_class_name('inputPanel').text.replace('change display format','').strip()
 		self.race_input_box = self.driver.find_element_by_class_name('txtInput')
 		self.race_words_count = len(self.race_text)

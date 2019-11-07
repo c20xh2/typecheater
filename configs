@@ -1,7 +1,7 @@
 username=username
 password=password
-wpm=90
+wpm=300
 minimum_games=10
 maximum_games=15
-headless=True
+headless=False
 accuracy=18
