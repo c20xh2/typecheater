@@ -2,6 +2,8 @@ import time
 import sys
 import random
 import string
+
+from sys import argv
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.chrome.options import Options 
@@ -88,7 +90,7 @@ class Racer():
 		
 		if self.headless_browser == 'True':
 			chrome_options.add_argument("--headless") 
-
+		chrome_options.add_argument("user-data-dir=./profile/")
 		chrome_options.add_argument("--user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.113 Safari/537.36")
 		
 		self.driver = webdriver.Chrome('./chromedriver', chrome_options=chrome_options)
@@ -108,13 +110,16 @@ class Racer():
 		for elem in sign_in:
 			if 'Sign In' in elem.text:
 				elem.click()
-	      
-		user_box = self.driver.find_element_by_name('username')
-		password_box = self.driver.find_element_by_name('password')
-		submit = self.driver.find_element_by_class_name('gwt-Button')
+		time.sleep(2)  
+		change_nick = self.driver.find_element_by_xpath('/html/body/div[6]/div/div/div[3]/div/div[1]/div/table[3]/tbody/tr[1]/td/a/table/tbody/tr/td[2]')
+		change_nick.click()
+		time.sleep(1)
+		user_box = self.driver.find_element_by_xpath('/html/body/div[6]/div/div/div[3]/div/div[1]/div/table[3]/tbody/tr[2]/td/div/table/tbody/tr[1]/td/table/tbody/tr/td[2]/input')
+		submit = self.driver.find_element_by_xpath('/html/body/div[6]/div/div/div[3]/div/div[1]/div/table[3]/tbody/tr[2]/td/div/table/tbody/tr[1]/td/table/tbody/tr/td[3]/button')
 		
+		user_box.clear()
+
 		user_box.send_keys(self.player_username)
-		password_box.send_keys(self.player_password)
 
 		submit.click()
 
@@ -125,10 +130,16 @@ class Racer():
 		self.avg_speed = self.driver.find_element_by_xpath('/html/body/div[1]/table/tbody/tr/td[3]/div/table/tbody/tr[2]/td[3]/table/tbody/tr/td[1]/div').text
 		self.races_total = self.driver.find_element_by_xpath('/html/body/div[1]/table/tbody/tr/td[3]/div/table/tbody/tr[2]/td[4]').text
 
-	def enter_first_race(self):
-		enter_race = self.driver.find_element_by_xpath('//*[@id="dUI"]/table/tbody/tr[2]/td[2]/div/div[1]/div/table/tbody/tr[2]/td/table/tbody/tr/td[2]/table/tbody/tr[1]/td/a')
-		enter_race.click()
-
+	def enter_first_race(self, race_url):
+		self.driver.get(race_url)
+		time.sleep(3)
+		while True:
+			try:
+				start_race = self.driver.find_element_by_class_name('raceAgainLink')
+				start_race.click()
+				break
+			except:
+				pass
 	def wait_for_countdown(self):
 		try:
 			self.driver.find_element_by_class_name('countdownPopup')
@@ -255,21 +266,19 @@ class Racer():
 		while not new_game:
 			
 			try:
-				play_again = self.driver.find_elements_by_tag_name('a')
-				for elem in play_again:
-					if 'Race Again' in elem.text:
-						elem.click()
-						new_game = True
+				play_again = self.driver.find_element_by_class_name('raceAgainLink')
+				elem.click()
 			except Exception as e:
 				pass
 
 racer = Racer()
 
+race_url = argv[1]
 racer.login()
 time.sleep(3)
 
-racer.get_racer_infos()
-racer.enter_first_race()
+# racer.get_racer_infos()
+racer.enter_first_race(race_url)
 
 while racer.games_count < racer.number_of_games:
 
