@@ -97,39 +97,6 @@ class Racer():
 		self.driver.set_window_size(1024, 768)
 
 
-	def login(self):
-
-		print('\n' * 100)
-		print('[|] Login in {}'.format(self.player_username))
-
-		self.driver.get('https://play.typeracer.com/')
-		time.sleep(5)
-
-		sign_in = self.driver.find_elements_by_tag_name('a')
-
-		for elem in sign_in:
-			if 'Sign In' in elem.text:
-				elem.click()
-		time.sleep(2)  
-		change_nick = self.driver.find_element_by_xpath('/html/body/div[6]/div/div/div[3]/div/div[1]/div/table[3]/tbody/tr[1]/td/a/table/tbody/tr/td[2]')
-		change_nick.click()
-		time.sleep(1)
-		user_box = self.driver.find_element_by_xpath('/html/body/div[6]/div/div/div[3]/div/div[1]/div/table[3]/tbody/tr[2]/td/div/table/tbody/tr[1]/td/table/tbody/tr/td[2]/input')
-		submit = self.driver.find_element_by_xpath('/html/body/div[6]/div/div/div[3]/div/div[1]/div/table[3]/tbody/tr[2]/td/div/table/tbody/tr[1]/td/table/tbody/tr/td[3]/button')
-		
-		user_box.clear()
-
-		user_box.send_keys(self.player_username)
-
-		submit.click()
-
-	def get_racer_infos(self):
-
-		self.skill_level = self.driver.find_element_by_xpath('/html/body/div[1]/table/tbody/tr/td[3]/div/table/tbody/tr[2]/td[2]/a').text
-		self.points = self.driver.find_element_by_xpath('/html/body/div[1]/table/tbody/tr/td[3]/div/table/tbody/tr[2]/td[5]').text
-		self.avg_speed = self.driver.find_element_by_xpath('/html/body/div[1]/table/tbody/tr/td[3]/div/table/tbody/tr[2]/td[3]/table/tbody/tr/td[1]/div').text
-		self.races_total = self.driver.find_element_by_xpath('/html/body/div[1]/table/tbody/tr/td[3]/div/table/tbody/tr[2]/td[4]').text
-
 	def enter_first_race(self, race_url):
 		self.driver.get(race_url)
 		time.sleep(3)
@@ -148,19 +115,6 @@ class Racer():
 		except Exception as e:
 			self.ready = True
 
-	def print_stats(self):
-
-		print('\n'*100)
-		print('[{}/{}] {} \n\n\t\tSkill Level: {} | Avg Speed: {} | races_total: {} | Points: {}'.format(
-			self.games_count, 
-			self.number_of_games, 
-			self.player_username, 
-			self.skill_level, 
-			self.avg_speed, 
-			self.races_total, 
-			self.points))
-		print('\n\t\tLast game placement: {}'.format(self.last_game_placement))
-		print('\n\t\tLast game speed: {}\n\t\tLast game time : {}\n\t\tLast game accuracy: {}\n\t\tLast game points: {}'.format(self.last_game_speed, self.last_game_time, self.last_game_accuracy, self.last_game_points))
 
 	def check_typo(self):
 
@@ -174,7 +128,6 @@ class Racer():
 	def race_init(self):
 
 		self.games_count +=1
-		self.print_stats()
 		time.sleep(4)
 
 		self.ready = False
@@ -274,17 +227,14 @@ class Racer():
 racer = Racer()
 
 race_url = argv[1]
-racer.login()
 time.sleep(3)
 
-# racer.get_racer_infos()
 racer.enter_first_race(race_url)
 
 while racer.games_count < racer.number_of_games:
 
 	racer.race_init()
 	racer.race()
-	racer.get_racer_infos()
 	racer.get_results()
 	racer.play_again()
 
